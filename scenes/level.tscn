@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://vhcbq08lqjtl"]
+
+[ext_resource type="PackedScene" uid="uid://d3hbq3fkfycu6" path="res://scenes/player.tscn" id="1_6x3gv"]
+[ext_resource type="Texture2D" uid="uid://nb3w0ix0mo2r" path="res://assets/space_shooter_redux/Backgrounds/darkPurple.png" id="1_krw03"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_txnr5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gsisr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8k1mx"]
+size = Vector2(170.5, 666)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jc0x"]
+size = Vector2(1486, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o5pos"]
+size = Vector2(1500, 102)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_txnr5")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(640, 357)
+scale = Vector2(5.42187, 3.22656)
+texture = ExtResource("1_krw03")
+
+[node name="Player" parent="." instance=ExtResource("1_6x3gv")]
+position = Vector2(499, 271)
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Borders"]
+position = Vector2(-4, 0)
+physics_material_override = SubResource("PhysicsMaterial_gsisr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/StaticBody2D"]
+position = Vector2(-76, 322)
+shape = SubResource("RectangleShape2D_8k1mx")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Borders"]
+position = Vector2(-16, 0)
+physics_material_override = SubResource("PhysicsMaterial_gsisr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/StaticBody2D2"]
+position = Vector2(602, 692)
+shape = SubResource("RectangleShape2D_7jc0x")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Borders"]
+position = Vector2(-8, 0)
+physics_material_override = SubResource("PhysicsMaterial_gsisr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/StaticBody2D3"]
+position = Vector2(588, -52)
+shape = SubResource("RectangleShape2D_o5pos")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Borders"]
+position = Vector2(-12, 0)
+physics_material_override = SubResource("PhysicsMaterial_gsisr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/StaticBody2D4"]
+position = Vector2(1250, 322)
+shape = SubResource("RectangleShape2D_8k1mx")
+
+[node name="MeteorTimer" type="Timer" parent="."]
+wait_time = 0.423
+autostart = true
+
+[node name="Meteors" type="Node2D" parent="."]
+
+[connection signal="timeout" from="MeteorTimer" to="." method="_on_meteor_timer_timeout"]
